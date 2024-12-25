@@ -55,9 +55,11 @@ namespace De02
                 dgvLoaiSP.Rows[index].Cells[0].Value = sanpham.MaSP;
                 dgvLoaiSP.Rows[index].Cells[1].Value = sanpham.TenSP;
                 dgvLoaiSP.Rows[index].Cells[2].Value = sanpham.Ngaynhap;
-                dgvLoaiSP.Rows[index].Cells[3].Value = sanpham.LoaiSP.TenLoai;
+                dgvLoaiSP.Rows[index].Cells[3].Value = sanpham.LoaiSP != null ? sanpham.LoaiSP.TenLoai : "Unknown";
             }
         }
+    
+        
 
         private void ClearInput()
         {
@@ -135,7 +137,7 @@ namespace De02
                 var sanpham = sanphams.FirstOrDefault(s => s.MaSP == txtID.Text);
                 if (sanpham != null)
                 {
-                    DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn xóa sinh viên này không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    DialogResult result = MessageBox.Show("Bạn có chắc muốn xóa sản phẩm này không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (result == DialogResult.No)
                     {
                         return;
@@ -201,10 +203,14 @@ namespace De02
             if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dgvLoaiSP.Rows[e.RowIndex];
-                txtID.Text = row.Cells[0].Value.ToString();
-                txtName.Text = row.Cells[1].Value.ToString();
-                dtpDate.Value = Convert.ToDateTime(row.Cells[2].Value);
-                cmbType.Text = row.Cells[3].Value.ToString();
+                if (row.Cells[0].Value != null)
+                    txtID.Text = row.Cells[0].Value.ToString();
+                if (row.Cells[1].Value != null)
+                    txtName.Text = row.Cells[1].Value.ToString();
+                if (row.Cells[2].Value != null)
+                    dtpDate.Value = Convert.ToDateTime(row.Cells[2].Value);
+                if (row.Cells[3].Value != null)
+                    cmbType.Text = row.Cells[3].Value.ToString();
             }
         }
 
